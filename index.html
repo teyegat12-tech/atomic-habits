@@ -996,6 +996,7 @@ function fieldsHtml(i,t){
 }
 const reqHtml=r=>[[r.q,'Ответить верно на вопросы'],[r.t,'Выполнить задание'],[r.l,'Применить в жизни'],[r.r,'Прочитать главу (по желанию)']].map(([ok,t])=>`<span class="${ok?'ok':''}"><i>${ok?'✓':''}</i>${t}</span>`).join('');
 const stepN=(n,ok)=>`<span class="n ${ok?'ok':''}" data-step="${n}" aria-label="Шаг ${n}${ok?', готово':''}">${n}</span>`;
+function optOrder(i,k,n){let seed=(i+1)*7919+(k+1)*104729;const rnd=()=>{seed=(seed*1103515245+12345)%2147483648;return seed/2147483648};const a=[...Array(n).keys()];for(let x=n-1;x>0;x--){const y=Math.floor(rnd()*(x+1));[a[x],a[y]]=[a[y],a[x]]}return a}
 function stepsHtml(r){return [r.r,r.q,r.t,r.l].map(v=>`<i class="${v?'on':''}"></i>`).join('')}
 function vLesson(){
   const i=S.cur,L=LESSONS[i],u=unlock(i);
@@ -1010,7 +1011,7 @@ function vLesson(){
   <div class="lgrid">
     <div class="col">
       <div class="card o-ideas"><h2 class="sec-t">${stepN(1,false)}Ключевые идеи</h2><ul class="ideas">${L.ideas.map(([t,d])=>`<li><b>${esc(t)}</b>${ideaHtml(d)}</li>`).join('')}</ul></div>
-      <div class="card o-quiz"><h2 class="sec-t">${stepN(2,r.q)}Проверь себя</h2>${L.quiz.map((q,k)=>{const st=S.quiz[i+'_'+k];return `<div class="q"><b>${esc(q.q)}</b><div class="opts">${q.o.map((o,j)=>{let c='';if(st&&st.pick===j)c=j===q.a?'right':'wrong';return `<button type="button" data-q="${i}_${k}" data-j="${j}" class="${c}">${esc(o)}</button>`}).join('')}</div>${st?`<div class="fb">${st.ok?esc(q.e):'Не совсем. Попробуй ещё.'}</div>`:''}</div>`}).join('')}</div>
+      <div class="card o-quiz"><h2 class="sec-t">${stepN(2,r.q)}Проверь себя</h2>${L.quiz.map((q,k)=>{const st=S.quiz[i+'_'+k];return `<div class="q"><b>${esc(q.q)}</b><div class="opts">${optOrder(i,k,q.o.length).map(j=>{const o=q.o[j];let c='';if(st&&st.pick===j)c=j===q.a?'right':'wrong';return `<button type="button" data-q="${i}_${k}" data-j="${j}" class="${c}">${esc(o)}</button>`}).join('')}</div>${st?`<div class="fb">${st.ok?esc(q.e):'Не совсем. Попробуй ещё.'}</div>`:''}</div>`}).join('')}</div>
       <div class="card o-task"><h2 class="sec-t">${stepN(3,r.t)}${esc(L.task.title)}</h2>${L.task.text?`<p style="color:var(--mut);margin:0 0 10px">${esc(L.task.text)}</p>`:''}${fieldsHtml(i,L.task)}</div>
       <div class="card o-refl"><h2 class="sec-t">${stepN(5,!!((S.ans[i]||{}).refl||"").trim())}Подумай</h2><label class="f" for="f_${i}_refl">${esc(L.reflect)}<textarea id="f_${i}_refl" data-ans="${i}" data-k="refl" placeholder="Необязательно, но полезно">${esc((S.ans[i]||{}).refl)}</textarea></label></div>
     </div>
