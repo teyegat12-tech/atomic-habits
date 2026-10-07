@@ -25,7 +25,7 @@ button,input,textarea{font:inherit;color:inherit}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 
 .shell{max-width:1240px;margin:0 auto;background:var(--shell);border-radius:32px;display:grid;grid-template-columns:72px 1fr;gap:20px;padding:14px;min-height:calc(100vh - 32px)}
-.rail{background:var(--dark);border-radius:36px;display:flex;flex-direction:column;align-items:center;gap:6px;padding-block:14px;position:sticky;top:30px;height:calc(100vh - 60px);height:calc(100dvh - 60px);min-height:420px}
+.rail{background:var(--dark);border-radius:36px;display:flex;flex-direction:column;align-items:center;gap:6px;padding-block:14px;position:fixed;top:30px;width:72px;z-index:20;height:calc(100vh - 60px);min-height:420px}
 .rail .logo{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);display:grid;place-items:center;margin-bottom:14px;color:var(--dark-ink);font-weight:800;font-size:14px}
 .rail button{width:44px;height:44px;border-radius:50%;border:none;background:transparent;color:rgba(243,245,241,.55);display:grid;place-items:center;cursor:pointer;position:relative}
 .rail button:hover{color:var(--dark-ink);background:rgba(255,255,255,.06)}
@@ -35,7 +35,7 @@ button,input,textarea{font:inherit;color:inherit}
 @media (hover:none){.rail .tip{display:none}}
 .rail .sp{flex:1}
 .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-main{min-width:0;padding:10px 6px 30px;overflow-wrap:anywhere}
+main{grid-column:2;min-width:0;padding:10px 6px 30px;overflow-wrap:anywhere}
 
 /* headline */
 .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
@@ -251,7 +251,19 @@ textarea{min-height:84px;resize:vertical}
 .bk-p .segs i{height:8px;max-height:8px;aspect-ratio:auto}
 .bk-i .pill{align-self:flex-start;margin-top:10px}
 .bookc.soon{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line)}
-@media (max-width:520px){.bookc{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:12px}.cover{padding:10px}.cover .cv-m{font-size:36px}.cover .cv-t{font-size:12px}.bookc.soon{grid-template-columns:44px minmax(0,1fr)}.bk-h b,.bookc.soon b{font-size:17px}}
+@media (max-width:600px){
+ .bookc{grid-template-columns:minmax(0,1fr);gap:14px;padding:12px}
+ .cover{aspect-ratio:auto;height:128px;position:relative;padding:14px 16px;align-self:stretch}
+ .cover .cv-a,.cover .cv-t{max-width:58%}
+ .cover .cv-t{font-size:17px}
+ .cover .cv-m{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:52px}
+ .cover .cv-g{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:34%;max-width:140px}
+ .bk-i{padding:0 4px 4px}
+ .bk-h b,.bookc.soon b{font-size:18px}
+ .bk-i .pill{align-self:stretch;justify-content:center}
+ .bookc.soon{grid-template-columns:44px minmax(0,1fr);gap:12px}
+ .bookc.soon .bk-i{padding:0}
+}
 
 /* tracker + journal */
 .cal-h{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:460px;margin-top:14px}
@@ -284,7 +296,8 @@ textarea{min-height:84px;resize:vertical}
 @media (max-width:720px){
   body{padding-inline:10px;padding-block:10px 90px}
   .shell{grid-template-columns:minmax(0,1fr);border-radius:24px;padding:12px}
-  .rail{position:fixed;left:10px;right:10px;top:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));height:auto;flex-direction:row;justify-content:space-around;padding:8px;z-index:20;max-height:none;min-height:0;border-radius:99px}
+  main{grid-column:1}
+  .rail{position:fixed;left:10px;right:10px;width:auto;top:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));height:auto;flex-direction:row;justify-content:space-around;padding:8px;z-index:20;max-height:none;min-height:0;border-radius:99px}
   .rail .logo,.rail .sp{display:none}
   .rail{gap:2px}
   .rail button{flex:0 1 44px;width:auto;height:auto;min-width:0;aspect-ratio:1}
