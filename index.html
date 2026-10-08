@@ -237,6 +237,7 @@ textarea{min-height:84px;resize:vertical}
 .cover .cv-a{font-size:10px;font-weight:700;letter-spacing:.02em;opacity:.7;line-height:1.2}
 .cover .cv-m{font-size:46px;font-weight:800;letter-spacing:-.05em;line-height:1}
 .cover .cv-g{width:100%;height:auto}
+.cover .cv-atom{width:72%;align-self:center}
 .cover .cv-p{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:62%;align-self:flex-start}
 .cover .cv-p i{font-style:normal;aspect-ratio:1;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:17px}
 .cover .cv-p i:nth-child(1){background:#E4F48B;color:#121412}.cover .cv-p i:nth-child(2){background:#151716;color:#F3F5F1}.cover .cv-p i:nth-child(3){background:#fff;color:#131316}.cover .cv-p i:nth-child(4){box-shadow:inset 0 0 0 1.5px #131316;color:#131316}
@@ -1486,7 +1487,7 @@ const BOOKDEFS={
   modules:A_MODULES,lessons:A_LESSONS,pages:A_PAGES,quotes:A_QUOTES,habit:15,
   hl:`Меняю привычки<span class="chip">${'{S}'}</span>по 1% <span class="chip l">${'{B}'}</span>каждый день`,
   blurb:'Как маленькие ежедневные действия складываются в большие перемены.',
-  cover:{bg:'#E4F48B',ink:'#121412',mark:'1%'}},
+  cover:{bg:'#E4F48B',ink:'#121412',mark:'atom'}},
  jedi:{id:'jedi',title:'Джедайские техники',author:'Максим Дорофеев',authorGen:'Максима Дорофеева',edition:'«МИФ», 2018',offset:0,
   modules:J_MODULES,lessons:J_LESSONS,pages:J_PAGES,quotes:J_QUOTES,habit:11,
   hl:`Берегу<span class="chip">${'{S}'}</span>мыслетопливо <span class="chip l">${'{B}'}</span>и довожу дела`,
@@ -1942,6 +1943,7 @@ function coverHtml(B){
   const c=B.cover;
   const mark=c.mark==='gauge'
     ?`<svg class="cv-g" viewBox="0 0 120 70" aria-hidden="true"><path d="M12 62a48 48 0 0 1 96 0" fill="none" stroke="rgba(243,245,241,.18)" stroke-width="10" stroke-linecap="round"/><path d="M12 62a48 48 0 0 1 62-46" fill="none" stroke="#E4F48B" stroke-width="10" stroke-linecap="round"/><path d="M60 62L84 30" stroke="#F3F5F1" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="62" r="6" fill="#F3F5F1"/></svg>`
+    :c.mark==='atom'?`<svg class="cv-g cv-atom" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#121412" stroke-width="5"><ellipse cx="60" cy="60" rx="52" ry="20"/><ellipse cx="60" cy="60" rx="52" ry="20" transform="rotate(60 60 60)"/><ellipse cx="60" cy="60" rx="52" ry="20" transform="rotate(-60 60 60)"/></g><circle cx="60" cy="60" r="10" fill="#121412"/><circle cx="112" cy="60" r="6" fill="#fff" stroke="#121412" stroke-width="3"/></svg>`
     :c.mark==='para'?`<span class="cv-p"><i>P</i><i>A</i><i>R</i><i>A</i></span>`
     :`<span class="cv-m">${esc(c.mark)}</span>`;
   return `<div class="cover" style="--cb:${c.bg};--ci:${c.ink}" aria-hidden="true"><span class="cv-a">${esc(B.author)}</span>${mark}<span class="cv-t">${esc(c.short||B.title).replace(/\n/g,'<br>')}</span></div>`;
